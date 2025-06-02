@@ -110,21 +110,6 @@ a:hover, a:active{
     border-color: var(--cor-destaque);
     background-color: var(--cor-fundo);
 }
-.class_nome_da_campanha{
-    
-}
-.class_desc_da_campanha{
-    
-}
-.class_anuncio_de_players{
-    
-}
-.tabela_de_personagens_campanha tr, th, td{
-}
-.cor_players{
-    
-    
-}
 .cor_colunas{
     color: var(--cor-destaque);
 }
@@ -156,10 +141,7 @@ a:hover, a:active{
     border-radius: 5px;
     border-color: var(--cor-destaque);
 }
-.body_players{
-    padding-left: 120px;
-    padding-right: 120px;
-}
+
 h1{
     text-align: center;
     font-size: 40px;
@@ -190,7 +172,7 @@ th, td {
     text-align: center;
     border-collapse: collapse;
     border: 2px solid;
-    border-color: var(--cor-destaque);
+    border-color: var(--cor-destaque);  
 }
 tr{
     border: 2px solid;

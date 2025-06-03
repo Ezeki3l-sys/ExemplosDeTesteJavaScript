@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../mobile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Crete+Round:ital@0;1&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <title>Ficha</title>
     <style>
       button{
@@ -77,11 +78,33 @@
               <p>${mana}</p>
               <h3>DESCRIÇÃO:</h3>
               <p>${descricao}</p>
-              <div class="butoes">
-                
-            </div>
             `;
+        
+        const lixo = coisax.querySelector(".bi-trash3");
+        lixo.addEventListener("click", () => {
+          coisax.remove();
+        });
 
+        
+        const editIcon = coisax.querySelector(".bi-pencil");
+        editIcon.addEventListener("click", () => {
+          const fitas_do_jogador = coisax.querySelectorAll("p");
+          
+          fitas_do_jogador.forEach(fitas_do_jogador => {
+            const currentText = fitas_do_jogador.innerText;
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = currentText;
+            
+            
+            fitas_do_jogador.innerHTML = "";
+            fitas_do_jogador.appendChild(input);
+
+            input.addEventListener("blur", () => {
+              fitas_do_jogador.innerHTML = input.value;
+            });
+          });
+        });
            caixas_de_escolha_players.appendChild(coisax);
           });
         });

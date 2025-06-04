@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Crete+Round:ital@0;1&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <title>Ficha</title>
@@ -44,11 +43,11 @@
       .then(res => res.json())
       .then(dados => {
         const caixas_de_escolha_players = document.getElementById("id_caixas_de_escolha_players");
-
+        localStorage.setItem("jogadores", JSON.stringify(dados));
         dados.forEach(player => {
           const nome_player = Object.keys(player)[0];
           const personagens = player[nome_player];
-
+         
           personagens.forEach(personagem => {
             const nome_personagem = Object.keys(personagem)[0];
             const [campanha, raca, classe, vida, mana, descricao] = personagem[nome_personagem];
@@ -58,7 +57,7 @@
 
             coisax.innerHTML = `
               <section>
-              <h2>${nome_personagem} (${nome_player})</h2>
+              <h2>${nome_personagem}</h2> <h2>(${nome_player})</h2>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                 </svg>
@@ -67,7 +66,7 @@
                 </svg>
               </section>
               <h3>CAMPANHA:</h3>
-              <p>${campanha}</p>
+              <h2 class='letra_pequena'>${campanha}</h2>
               <h3>RAÇA:</h3>
               <p>${raca}</p>
               <h3>CLASSE:</h3>
@@ -89,6 +88,8 @@
         const editIcon = coisax.querySelector(".bi-pencil");
         editIcon.addEventListener("click", () => {
           const fitas_do_jogador = coisax.querySelectorAll("p");
+          const nome_do_jogador = coisax.querySelectorAll("h2")[0]
+          console.log(dados[0][0])
           
           fitas_do_jogador.forEach(fitas_do_jogador => {
             const currentText = fitas_do_jogador.innerText;
@@ -104,6 +105,20 @@
               fitas_do_jogador.innerHTML = input.value;
             });
           });
+          
+            const currentText = nome_do_jogador.innerText;
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = currentText;
+            
+            
+            nome_do_jogador.innerHTML = "";
+            nome_do_jogador.appendChild(input);
+
+            input.addEventListener("blur", () => {
+              nome_do_jogador.innerHTML = input.value;
+            });
+          
         });
            caixas_de_escolha_players.appendChild(coisax);
           });
@@ -112,6 +127,7 @@
       .catch(erro => {
         console.error("Erro ao carregar JSON:", erro);
       });
+      
     </script>
     <script src="../js/tema.js"></script>
 </body>

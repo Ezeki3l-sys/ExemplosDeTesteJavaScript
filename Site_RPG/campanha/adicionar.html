@@ -94,7 +94,7 @@
             // Carrega as campanhas existentes ou cria uma lista vazia
             let campanhas = JSON.parse(localStorage.getItem("campanhas")) || [];
             campanhas.push(novaCampanha);
-
+            
             // Salva novamente no localStorage
             localStorage.setItem("campanhas", JSON.stringify(campanhas));
 

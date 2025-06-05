@@ -82,6 +82,17 @@
         const lixo = coisax.querySelector(".bi-trash3");
         lixo.addEventListener("click", () => {
           coisax.remove();
+          console.log(typeof(nome_player))
+          console.log(nome_player)
+          nome = nome_player
+          console.log(nome)
+          jogador = Object.entries(dados[0].Vitor)
+          jogador.forEach (mano => {
+            console.log(mano[1])
+            localStorage.removeItem(mano[1].value)
+            console.log(mano[1])
+          }
+          )
         });
 
         
@@ -89,7 +100,7 @@
         editIcon.addEventListener("click", () => {
           const fitas_do_jogador = coisax.querySelectorAll("p");
           const nome_do_jogador = coisax.querySelectorAll("h2")[0]
-          console.log(dados[0][0])
+          console.log(dados[0])
           
           fitas_do_jogador.forEach(fitas_do_jogador => {
             const currentText = fitas_do_jogador.innerText;

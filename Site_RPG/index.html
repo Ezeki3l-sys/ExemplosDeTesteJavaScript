@@ -118,8 +118,24 @@
                 console.error("Erro ao carregar as campanhas:", erro);
             });
     }
+    function carregarFichasJson() {
+        fetch("dados/ficha.json")
+            .then((res) => {
+                return res.json();  // Converte a resposta para um objeto JSON
+            })
+            .then((conteudo_fichas_json) => {
+                // Aqui você armazena o objeto JSON como uma string no localStorage
+                localStorage.setItem("jogadores2", []);
+                localStorage.setItem("jogadores2", JSON.stringify(conteudo_fichas_json));           
+            })
+            .catch((erro) => {
+                console.error("Erro ao carregar as campanhas:", erro);
+            });
+    }    
+
     if (localStorage.getItem("jsonCarregado")!='true'){
         carregarCampanhasJson();
+        carregarFichasJson();
     }
 
     function exportarCampanhas() {

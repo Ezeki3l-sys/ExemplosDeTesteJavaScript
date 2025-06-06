@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Crete+Round:ital@0;1&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
     <title>Ficha</title>
     <style>
       button{
@@ -39,25 +41,32 @@
     </div>
 
     <script>
-      fetch('../dados/ficha_dos_jogadores.json')
+      fetch('../dados/ficha.json')
       .then(res => res.json())
       .then(dados => {
         const caixas_de_escolha_players = document.getElementById("id_caixas_de_escolha_players");
-        localStorage.setItem("jogadores", JSON.stringify(dados));
-        dados.forEach(player => {
-          const nome_player = Object.keys(player)[0];
-          const personagens = player[nome_player];
-         
-          personagens.forEach(personagem => {
-            const nome_personagem = Object.keys(personagem)[0];
-            const [campanha, raca, classe, vida, mana, descricao] = personagem[nome_personagem];
+        localStorage.setItem("jogadores2", JSON.stringify(dados));
 
+        let conteudo_jogadores = JSON.parse(localStorage.getItem("jogadores2"));
+        for (const [nome_player, conteudo_personagens] of Object.entries(conteudo_jogadores)){
+            console.log(`${nome_player}: ${conteudo_personagens}`);
+            console.log(Object(conteudo_personagens))
+            
+            const nome_personagem = Object.keys(conteudo_personagens)[0];
+            const [campanha, raca, classe, vida, mana, descricao] = conteudo_personagens[nome_personagem];
+            
             const coisax = document.createElement("div");
-            coisax.setAttribute("class", `caixas_de_escolha_players`)
+            coisax.setAttribute("class", `caixas_de_escolha_players`);
+
+            // for (const [personagem, dados_ficha] of Object.entries(conteudo_personagens)){
+            //     console.log(`${personagem}: ${dados_ficha}`);
+            // }
 
             coisax.innerHTML = `
               <section>
               <h2>${nome_personagem}</h2> <h2>(${nome_player})</h2>
+              <button onclick=excluirPersonagem('${nome_player}','${nome_personagem}'); ><i class="bi bi-trash"></i></button>
+              
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                 </svg>
@@ -78,71 +87,41 @@
               <h3>DESCRIÇÃO:</h3>
               <p>${descricao}</p>
             `;
-        
-        const lixo = coisax.querySelector(".bi-trash3");
-        lixo.addEventListener("click", () => {
-          coisax.remove();
 
-          console.log(typeof(nome_player))
-          console.log(nome_player)
-          
-          nome = nome_player
-          console.log(nome)
 
-          jogador = Object.entries(dados[0].nome_player)
+            caixas_de_escolha_players.appendChild(coisax);
 
-          jogador.forEach (mano => {
-            console.log(mano[1])
-            localStorage.removeItem(mano[1].value)
-            console.log(mano[1])
-          }
-          )
-        });
+        }
 
         
-        const editIcon = coisax.querySelector(".bi-pencil");
-        editIcon.addEventListener("click", () => {
-          const fitas_do_jogador = coisax.querySelectorAll("p");
-          const nome_do_jogador = coisax.querySelectorAll("h2")[0]
-          console.log(dados[0])
-          
-          fitas_do_jogador.forEach(fitas_do_jogador => {
-            const currentText = fitas_do_jogador.innerText;
-            const input = document.createElement("input");
-            input.type = "text";
-            input.value = currentText;
-            
-            
-            fitas_do_jogador.innerHTML = "";
-            fitas_do_jogador.appendChild(input);
-
-            input.addEventListener("blur", () => {
-              fitas_do_jogador.innerHTML = input.value;
-            });
-          });
-          
-            const currentText = nome_do_jogador.innerText;
-            const input = document.createElement("input");
-            input.type = "text";
-            input.value = currentText;
-            
-            
-            nome_do_jogador.innerHTML = "";
-            nome_do_jogador.appendChild(input);
-
-            input.addEventListener("blur", () => {
-              nome_do_jogador.innerHTML = input.value;
-            });
-          
-        });
-           caixas_de_escolha_players.appendChild(coisax);
-          });
-        });
       })
       .catch(erro => {
         console.error("Erro ao carregar JSON:", erro);
       });
       
+    function excluirPersonagem(jogador, personagem){
+        alert(`Você deseja remover o ${personagem} do jogador ${jogador}`);
+        let conteudo_jogadores_remover_personagem = JSON.parse(localStorage.getItem("jogadores2"));
+        
+        if (conteudo_jogadores_remover_personagem[jogador] && conteudo_jogadores_remover_personagem[jogador][personagem]){
+            delete conteudo_jogadores_remover_personagem[jogador][personagem];
+            console.log(`${personagem} foi removido de ${jogador}`);
+        } else {
+            console.log(`Jogador ou personagem não encontrado.`);
+        }
+        console.log(conteudo_jogadores_remover_personagem);
+        //console.log(JSON.parse(localStorage.getItem("jogadores2")));
+        localStorage.setItem("jogadores2", JSON.stringify(conteudo_jogadores_remover_personagem));
+
+        //window.location.reload();
+
+    }
+
+
+
+      
+
+     
     </script>
     <script src="../js/tema.js"></script>
 </body>

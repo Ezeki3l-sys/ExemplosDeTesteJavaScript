@@ -53,10 +53,13 @@
     
     <form id="formCampanha">
         <input autocomplete="off" type="text" id="nome" placeholder="Nome da campanha" required>
+        <input type="text" id="imagem" placeholder="Imagem da Campanha (URL)">
         <textarea id="descricao" name="descricaoEditar" placeholder="Descrição"  rows="4" cols="50" required></textarea>
         
-        <label for="dataInicio">Data de Início</label>
-        <input type="date" id="dataInicio" placeholder="Data de Início" required>
+        <label>Data de Início</label>
+        <input type="date" id="inicio">
+        <label>Data de Finalização</label>
+        <input type="date" id="fim">
 
         <button type="submit">Adicionar Campanha</button>
     </form>
@@ -73,22 +76,24 @@
             event.preventDefault(); // Evita o envio do formulário e recarregamento da página
 
             const nome = document.getElementById("nome").value;
+            const img = document.getElementById("imagem").value
             const descricao = document.getElementById("descricao").value;
-            const dataInicio = document.getElementById("dataInicio").value;
-            const dataFim = null
+            const inicio = document.getElementById("inicio").value;
+            const fim = document.getElementById("fim").value;
 
             // Verifica se todos os campos estão preenchidos
-            if (!nome || !descricao || !dataInicio) {
-                alert("Por favor, preencha todos os campos!");
+            if (!nome || !descricao) {
+                alert("Por favor, preencha os campos necessários!");
                 return;
             }
             
 
             const novaCampanha = {
                 nome,
+                img,
                 descricao,
-                dataInicio,
-                dataFim
+                inicio,
+                fim
             };
 
             // Carrega as campanhas existentes ou cria uma lista vazia

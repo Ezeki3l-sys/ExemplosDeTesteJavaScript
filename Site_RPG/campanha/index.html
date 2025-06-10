@@ -82,7 +82,7 @@
 
         // Adicionar conteúdo à campanha
         // <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarCampanha">Editar via Target</button>
-        sectionCampanha.innerHTML = `<a onclick="abirCampanha(${pos})" href="#">
+        sectionCampanha.innerHTML = `<a onclick="abrirCampanha(${pos})" href="#">
             <h3>${campanha.nome}</h3>
             <p>${campanha.descricao}</p></a>
             <button type="button" class="btn btn-primary" onclick="editarCampanha(${pos})" >Editar</button>        
@@ -115,7 +115,9 @@
           
             document.getElementById('nomeEditar').value = campanha.nome;
             document.getElementById('descricaoEditar').value = campanha.descricao;
-            document.getElementById('dataInicioEditar').value = campanha.dataInicio;
+            document.getElementById('dataInicioEditar').value = campanha.inicio;
+            document.getElementById('dataFimEditar').value = campanha.fim
+            document.getElementById('imagemEditar').value = campanha.img
             
 
 
@@ -126,14 +128,16 @@
                         // Pega os dados do formulário
                         const nome = document.getElementById('nomeEditar').value;
                         const descricao = document.getElementById('descricaoEditar').value;
-                        const dataInicio = document.getElementById('dataInicioEditar').value;
-                        
+                        const inicio = document.getElementById('dataInicioEditar').value;
+                        const fim = document.getElementById('dataFimEditar').value
+                        const img = document.getElementById('imagemEditar').value
 
                         // Atualiza os dados da campanha no array de campanhas
                         campanha.nome = nome;
                         campanha.descricao = descricao;
-                        campanha.dataInicio = dataInicio;
-                        campanha.dataFim = null;
+                        campanha.inicio = inicio;
+                        campanha.fim = fim;
+                        campanha.img = img
 
                         // Atualiza o localStorage com as campanhas modificadas
                         const index = campanhas.findIndex(c => c.id === idCampanha);
@@ -150,7 +154,7 @@
                     };
 
         }
-        function abirCampanha(idCampanha){
+        function abrirCampanha(idCampanha){
             let campanha = campanhas[idCampanha];
             localStorage.setItem('campanha_selecionada', JSON.stringify(campanha));
             window.location.href = "./detalhes.html";

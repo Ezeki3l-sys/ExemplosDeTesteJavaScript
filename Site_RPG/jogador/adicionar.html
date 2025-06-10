@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="cima">
+        <a  style="width: 10%"; href="index.html"><img class="x" style="width: 40px;" src="../imagens/icone-x-noir.png" alt="sair"></a>
+       <h1 class="text-center">Adicionar Novo Personagem</h1>
+   </div>
+   
+   <form id="formPersonagem">
+       <input autocomplete="off" type="text" id="nome" placeholder="Nome do personagem" required>
+       <input type="text" placeholder="Raça do personagem" id="raca" required>
+       <input type="text" placeholder="Classe do personagem" id="classe" required>
+       <input type="number" placeholder="Vida do personagem" id="vida" required>
+       <input type="number" placeholder="Mana do personagem" id="mana" required>
+       
+       <textarea id="descricao" name="descricaoEditar" placeholder="Descrição"  rows="4" cols="50" required></textarea>
+       <button onclick="adicionar()" type="submit">Adicionar Personagem</button>
+       
+   </form>
+   <ul id="lista">
+
+   </ul>
+   <script>
+        function adicionar(){
+            nome = document.getElementById('nome').value
+            console.log(nome)
+            jogadores = document.createElement('li')
+            jogadores.innerText = nome
+            todos = document.getElementById('lista')
+            todos.appendChild(jogadores)
+        }
+       
+   </script>
+</body>
+</html>

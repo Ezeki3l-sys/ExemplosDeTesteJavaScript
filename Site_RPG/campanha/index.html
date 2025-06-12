@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mestre</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" href="../mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Crete+Round:ital@0;1&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../mobile.css">
 
     <style>
-        
+        a{
+            color: white;
+        }
         /* :root {
         --cor-fundo: #2f1335;
         --cor-texto: #ffffff;
@@ -22,11 +24,11 @@
         <a href="../index.html" target="_self"><img src="../imagens/d20_bonito.png" alt="logo" class="dado20"></a>
         <ul class="nav-links">
             <li class="pagina_atual">Mestre</li>
-            <a href="../jogador/index.html"><li>Jogador</li></a>
+            <li>Jogador</li>
         </ul>
         <div class="menu-icon"><img class="grimoriobonito" src="../imagens/grimorio_bonito.png" alt=""></div>
     </nav>
-    <h1 class="anunciante_campanhas" >CAMPANHAS</h1>
+    <h1 class="anunciante_campanhas" >Campanhas</h1>
     <div class="campanhas" id="campanhas">
  
     </div>
@@ -36,22 +38,23 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalEditarCampanhaLabel">Editando</h1>
+            <h1 class="modal-title fs-5" id="modalEditarCampanhaLabel">Editando Campanha...</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Editar campanha com ID: <span id="campanhaId"></span></p>
+                <p><span id="campanhaId"></span></p>
                 <form id="formEditarCampanha">
+                    <input type="text" id="imagemEditar" placeholder="Imagem da campanha (url)" >
                     <input type="text" id="nomeEditar" placeholder="Nome da campanha" required>
-                    <!-- <input type="text" id="descricaoEditar" rows="4" cols="50" required> -->
                     <textarea id="descricaoEditar" name="descricaoEditar" placeholder="Descrição"  rows="4" cols="50" required></textarea>
-                    <input type="date" id="dataInicioEditar" placeholder="Data de Início" required>
+                    <input type="date" id="dataInicioEditar">
+                    <input type="date" id="dataFimEditar">
                     
                 </form>                
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" id="salvarAlteracoes">SALVAR</button>
+            <button type="button" class="btn btn-primary" id="salvarAlteracoes">Salvar</button>
             </div>
         </div>
         </div>
@@ -70,7 +73,6 @@
         
     }
     //parseInt(a.match(/\d+/)[0]);
-    
 
     function adicionarElementoCampanha(campanha, pos) {      
         const container = document.getElementById("campanhas");
@@ -131,6 +133,7 @@
                         const inicio = document.getElementById('dataInicioEditar').value;
                         const fim = document.getElementById('dataFimEditar').value
                         const img = document.getElementById('imagemEditar').value
+                        
 
                         // Atualiza os dados da campanha no array de campanhas
                         campanha.nome = nome;

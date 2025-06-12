@@ -113,6 +113,27 @@ ul{
     flex-direction: row;
     gap: 75px;
 }
+/* --- Seção das Sessões (quase rimou) --- */
+
+.cenas_descricao{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 250px;
+}
+.borda_cenas_descricao{
+    border: 5px solid var(--cor-destaque);
+    padding: 10px;
+}
+.sessoes{ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+}
 
 /* Tabela de Players */
 
@@ -182,12 +203,12 @@ footer{
     justify-content: space-evenly;
     border-top: 5px var(--cor-destaque) solid;
 }
-a{
+a, .nav-link{
     color: var(--cor-texto);
     text-decoration: none;
     transition: color 0.3s;
 }
-a:hover, a:active{
+a:hover, a:active, .nav-link:hover, .nav-link:active{
     color: var(--cor-destaque);
 }
 .letra_grande{

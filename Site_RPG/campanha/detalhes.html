@@ -2,15 +2,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../mobile.css">
+    <title>Sessões</title>
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Crete+Round:ital@0;1&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../mobile.css">
 </head>
 <body>
     <nav>
         <a href="../index.html" target="_self"><img src="../imagens/d20_bonito.png" alt="logo" class="dado20"></a>
         <ul class="nav-links">
             <li><a href="../campanha/index.html" target="_self">Mestre</a></li>
-            <a href="../jogador/index.html"><li>Jogador</li></a>
+            <li><a href="../jogador/index.html">Jogador</a></li>
         </ul>
         
         <div class="menu-icon"><img class="grimoriobonito" src="../imagens/grimorio_bonito.png" alt=""></div>
@@ -24,7 +25,7 @@
         </li>
       </ul>
     <div class="class_img_da_campanha">
-    <img src="" alt="" class="borda_imagem" id="imagem_da_campanha">
+    <img src="" alt="" class="borda_img_da_campanha" id="imagem_da_campanha">
 </div>
     <h2 class="class_nome_da_campanha" id="nome_da_campanha"></h2>
 
@@ -48,19 +49,13 @@
         <table class="tabela_de_personagens_campanha" id="id_tabela_de_personagens_campanha">
         <thead>
             <tr>
-                <th scope="col" class="cor_colunas">Nome do Player</th>
-                <th scope="col" class="cor_colunas">Nome do Personagem</th>
-                <th scope="col" class="cor_colunas">Raça</th>
-                <th scope="col" class="cor_colunas">Classe</th>
+                <th scope="col" class="cor_colunas_tabela_de_players">Nome do Player</th>
+                <th scope="col" class="cor_colunas_tabela_de_players">Nome do Personagem</th>
+                <th scope="col" class="cor_colunas_tabela_de_players">Raça</th>
+                <th scope="col" class="cor_colunas_tabela_de_players">Classe</th>
             </tr>
         </thead>
     </table>
-    
-    <div style="text-align: center; margin-top: 30px;">
-    <button>Adicionar Players</button>
-    <button>Remover Players</button>
-    
-</div>
     <script src="../js/tema.js "></script>
 
     <script>
@@ -74,12 +69,10 @@
         menuIcon.addEventListener('click', () => {
           navLinks.classList.toggle('active');
         });
-     
-      
  
         function carregarConteudoCampanha(){
              let campanha =  JSON.parse(localStorage.getItem("campanha_selecionada"));
-             let jogadores = JSON.parse(localStorage.getItem("jogadores"))
+             const jogadores = JSON.parse(localStorage.getItem("jogadores"))
              document.title = campanha.nome;
              document.getElementById("nome_da_campanha").innerText = campanha.nome.toUpperCase();
              let nome_da_campanha = document.getElementById("nome_da_campanha").innerText
@@ -97,19 +90,69 @@
              }
 
              if(campanha.img===""){
-                document.getElementById("imagem_da_campanha").src = "../imagens/espada_legau.png"
+                document.getElementById("imagem_da_campanha").src = "../imagens/espadalegau.webp"
              } else {
                 document.getElementById("imagem_da_campanha").src = campanha.img
              }
              const tabela = document.querySelector("#id_tabela_de_personagens_campanha thead");
              
-         jogadores.forEach(jogador => {
-            const nome_player = Object.keys(jogador)[0];
-            const personagens = jogador[nome_player];
+        //  jogadores.forEach(jogador => {
+        //     const nome_player = Object.keys(jogador)[0];
+        //     const personagens = jogador[nome_player];
 
-            personagens.forEach(personagem => {
-                const nome_personagem = Object.keys(personagem)[0];
-                const [campanha, raca, classe, vida, mana, descricao] = personagem[nome_personagem];
+        //     personagens.forEach(personagem => {
+        //         const nome_personagem = Object.keys(personagem)[0];
+        //         const [campanha, raca, classe, vida, mana, descricao] = personagem[nome_personagem];
+        //         if(nome_da_campanha===campanha.toUpperCase()){
+        //             const linha = document.createElement("tr");
+ 
+        //             linha.innerHTML = `
+        //             <th scope="row">${nome_player}</th>
+        //             <td>${nome_personagem}</td>
+        //             <td>${raca}</td>
+        //             <td>${classe}</td>
+        //             `;
+ 
+        //         tabela.appendChild(linha);
+        //         }
+        //     })
+        //  });
+        for (const [jogador, d_personagem] of Object.entries(jogadores)) {
+                for (const [personagem, dados] of Object.entries(d_personagem)) {
+                    console.log(`${personagem}: ${dados}`);
+                    
+                    const campanha = dados[0]
+                    const raca = dados[1]
+                    const classe = dados[2]
+                    console.log(campanha)
+                    if(nome_da_campanha===campanha.toUpperCase()){
+                        const linha = document.createElement("tr");
+    
+                        linha.innerHTML = `
+                        <th scope="row">${jogador}</th>
+                        <td>${personagem}</td>
+                        <td>${raca}</td>
+                        <td>${classe}</td>
+                        `;
+    
+                    tabela.appendChild(linha);
+                }
+            }
+            }
+         }
+         
+     </script>
+</body>
+</html>
+
+<!-- for (const [jogador, d_personagem] of Object.entries(jogadores)) {
+    console.log(`${jogador}: ${d_personagem}`);
+    const nome_player = Object.keys(jogador)[0];
+    const personagens = jogador[nome_player];
+      for (const [personagem, dados] of Object.entries(d_personagem)) {
+          console.log(`${personagem}: ${dados}`);
+          const nome_personagem = Object.keys(personagem)[0];
+          const [campanha, raca, classe, vida, mana, descricao] = personagem[nome_personagem];
                 if(nome_da_campanha===campanha.toUpperCase()){
                     const linha = document.createElement("tr");
  
@@ -121,11 +164,7 @@
                     `;
  
                 tabela.appendChild(linha);
-                }
-            })
-         });
-         }
-         
-     </script>
-</body>
-</html>
+
+      }
+  }
+} -->

@@ -123,8 +123,8 @@
             })
             .then((conteudo_fichas_json) => {
                 // Aqui você armazena o objeto JSON como uma string no localStorage
-                localStorage.setItem("jogadores2", []);
-                localStorage.setItem("jogadores2", JSON.stringify(conteudo_fichas_json));           
+                localStorage.setItem("jogadores", []);
+                localStorage.setItem("jogadores", JSON.stringify(conteudo_fichas_json));           
             })
             .catch((erro) => {
                 console.error("Erro ao carregar as campanhas:", erro);

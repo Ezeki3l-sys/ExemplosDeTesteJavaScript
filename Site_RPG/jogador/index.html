@@ -52,8 +52,9 @@
                      <input class="form-control" autocomplete="off" type="text" id="nome" placeholder="Nome do personagem" required>
                      <label for="campanhas">Campanhas:</label>
                      <select class="form-control" id="campanhas" name="lista_campanhas" form="todas_as_campanhas">
-                        <option value="-1" selected>Clique para escolher a campanha</option>
+                        <option value="-1" >Clique para escolher a campanha</option>
                      </select>
+
                      <input class="form-control" type="text" placeholder="Raça do personagem" id="raca" required>
                      <input class="form-control" type="text" placeholder="Classe do personagem" id="classe" required>
                      <input class="form-control" type="number" placeholder="Vida do personagem" id="vida" required>
@@ -63,7 +64,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="button" class=""  onclick="adicionarPersonagem()" type="submit">Adicionar Personagem</button>
+                  <button type="button" class=""  onclick="adicionarPersonagem()" type="submit">Salvar Personagem</button>
                </div>
             </div>
          </div>
@@ -89,7 +90,7 @@
                console.log(`${nome_player}: ${conteudo_personagens}`);
                console.log(Object(conteudo_personagens))           
                const divJogador = document.createElement("div");
-               divJogador.innerHTML = `<h2>${nome_player}</h2>`
+               divJogador.innerHTML = `<h2 class='nome_do_cidadao'>${nome_player}</h2>`
                divJogador.setAttribute("id", `jogador_${nome_player}`);
                divJogador.setAttribute ('class', 'caixas_de_escolha_players')
                const divAddJogador = document.createElement("div");
@@ -111,7 +112,7 @@
                    console.log(dados_ficha);
                    divPersonagensJogador.innerHTML = `
                      <section id>
-                     <h2>${nome_personagem}</h2> <h2>(${nome_player})</h2>
+                     <h2>${nome_personagem}</h2> 
                      <button onclick=excluirPersonagem('${nome_player}','${nome_personagem}'); ><i class="bi bi-trash"></i></button>
                      <button onclick=editarPersonagem('${nome_player}','${nome_personagem}'); ><i class="bi bi-pencil-fill"></i></button>
                      
@@ -187,9 +188,11 @@
          }
          
          function adicionarPersonagem(){
+            let conteudo_jogadores = JSON.parse(localStorage.getItem("jogadores")); 
             //event.preventDefault(); // Evita o envio do formulário e recarregamento da página
 
-            const nome = document.getElementById("nome").value;
+            const nome = (document.getElementById("nome").value).replaceAll(" ","_");
+
             const campanha = document.getElementById("campanhas").value;
             const raca = document.getElementById("raca").value
             const classe = document.getElementById("classe").value;
@@ -216,7 +219,7 @@
             console.log(nome)
             console.log(novoPersonagem)
             
-            let dados_do_personagens_do_jogador= conteudo_jogadores[jogador];
+            let dados_do_personagens_do_jogador = conteudo_jogadores[jogador];
             
             dados_do_personagens_do_jogador[nome] = novoPersonagem;
             
@@ -233,14 +236,50 @@
                // todos = document.getElementById('lista')
                // todos.appendChild(jogadores)
          }
-         function editarPersonagem(){
+         function editarPersonagem(player, nome_personagem){
+            document.getElementById("modalAddNovoPersonagemJogadorLabel").innerText = `Editar personagem ${nome_personagem}` 
+            let campanhas_existentes = JSON.parse(localStorage.getItem("campanhas"));
+            let conteudo_jogadores = JSON.parse(localStorage.getItem("jogadores")); 
+            let personagem = conteudo_jogadores[player][nome_personagem];
+            console.log(personagem);
+
+            const form = document.getElementById("formPersonagem");
+            document.getElementById("nomeID").value = player;
+            let campo_nome_personagem = document.getElementById("nome");
+            campo_nome_personagem.value = nome_personagem;
+            campo_nome_personagem.setAttribute("disabled", "disabled");
+
+            
+            //document.getElementById("campanhas").value = personagem[0];
+
+            let opcoes = document.getElementById('campanhas');
+
+            for(let i=0;i<campanhas_existentes.length;i++){
+               console.log(campanhas_existentes[i].nome)
+               nova_opcao = document.createElement('option')
+               nova_opcao.innerText = campanhas_existentes[i].nome
+               if (campanhas_existentes[i].nome === personagem[0]){
+                  nova_opcao.setAttribute("selected", "selected");
+               }
+               opcoes.appendChild(nova_opcao)
+            }
+            
+
+            document.getElementById("raca").value = personagem[1];
+            document.getElementById("classe").value = personagem[2];
+            document.getElementById("vida").value = personagem[3];
+            document.getElementById("mana").value = personagem[4];
+            document.getElementById("descricao").value = personagem[5];
+
             modalNovoPersonagem.show();
+
          }
-         function adicionarJogador(){
+         function adicionarJogador(){            
             let caixa_gande = document.getElementById('id_caixas_de_escolha_players');
-            let nome = window.prompt('Nome do jogador...');
+            let nome = window.prompt('Nome do jogador...').replaceAll(" ","_");
             
             let jogadores = JSON.parse(localStorage.getItem("jogadores"));
+            
             for (const [jogador_nome] of Object.entries(jogadores)) {
                if(nome.toLowerCase()===jogador_nome.toLowerCase()){
                   alert('Este jogador já existe!')
@@ -259,7 +298,8 @@
                   divJogador.appendChild(divAddJogador);
 
                   caixa_gande.appendChild(divJogador)
-                  localStorage.setItem("jogadores", nome);
+                  jogadores[nome] = {}
+                  localStorage.setItem("jogadores", JSON.stringify(jogadores));                  
                   break
                }
             }

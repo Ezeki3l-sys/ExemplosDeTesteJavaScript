@@ -173,7 +173,16 @@ th, td {
     margin-bottom: 20px;
 }
 
+/* parte dos jogadores */
+.nome_do_cidadao{
+    font-size: xx-large;
+    background-color: var(--cor-texto);
+    border: solid;
+    padding: 0;
+    margin: 0;
+    
 
+}
 /* --- Classes Gerais e Funcionalidades Adicionais --- */
 
 .pagina_atual{

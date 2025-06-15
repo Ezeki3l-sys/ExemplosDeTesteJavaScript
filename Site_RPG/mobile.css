@@ -190,11 +190,11 @@ th, td {
 }
 h1{
     text-align: center;
-    font-size: 40px;
+    font-size: x-large;
 }
 h2{
     text-align: center;
-    font-size: 25px;
+    font-size: x-large;
     color: var(--cor-destaque);
 }
 h3{
@@ -204,6 +204,7 @@ h3{
 }
 p{
     text-align: center;
+    font-size: larger;
     color: var(--cor-texto)
 }
 footer{

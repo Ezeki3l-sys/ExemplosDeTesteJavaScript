@@ -12,11 +12,6 @@
         a{
             color: white;
         }
-        /* :root {
-        --cor-fundo: #2f1335;
-        --cor-texto: #ffffff;
-        --cor-destaque: #ce3762;
-      } */
     </style>
 </head>
 <body>
@@ -72,18 +67,14 @@
         adicionarElementoCampanha(campanhas[i],i);
         
     }
-    //parseInt(a.match(/\d+/)[0]);
 
     function adicionarElementoCampanha(campanha, pos) {      
         const container = document.getElementById("campanhas");
-        // Criar um novo elemento para a campanha
-        const sectionCampanha = document.createElement("section");
-        //sectionCampanha.setAttribute("id", campanha.nome);            
+        const sectionCampanha = document.createElement("section");         
         sectionCampanha.setAttribute("id", `campanha-${pos}`);            
         sectionCampanha.classList.add("campanha", "caixa_da_campanha");
 
         // Adicionar conteúdo à campanha
-        // <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarCampanha">Editar via Target</button>
         sectionCampanha.innerHTML = `<a onclick="abrirCampanha(${pos})" href="#">
             <h3>${campanha.nome}</h3>
             <p>${campanha.descricao}</p></a>
